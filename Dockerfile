@@ -22,4 +22,4 @@ COPY . .
 EXPOSE 5000
 # default docker and flask port
 
-CMD ["flask", "run", "--debug"]
+CMD ["flask", "run", "--host=0.0.0.0"]

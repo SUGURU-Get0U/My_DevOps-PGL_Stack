@@ -1,11 +1,38 @@
+name: liam_test
+
+# "-" in compose means a list!
+
 services:
+  foo:
+    image: busybox
+    command: echo "Im learning Docker compose and this is my project ${COMPOSE_PROJECT_NAME}"
   web:
-    build: .
+    build: . # tells compose to build our application from our source "." here!
     ports:
       - "${APP_PORT}:5000"
-    environment:
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
 
+    environment:
+      - REDIS_HOST=${REDIS_HOST} # Maps the host (my pc) port to 5000
+      - REDIS_PORT=${REDIS_PORT} # redis port is 6367 or smth
+    
+    depends_on: # this says, the web block will only run if redis is running!
+      redis:
+        condition: service_healthy
+    
   redis:
-    image: redis:alpine
+    image: redis:alpine # runs a apline "smaller" version of redis!
+    healthcheck: # runs a health check to validate the redis status!
+      test: ["CMD", "redis-cli", "ping"] # pings redis
+      interval: 5s # every 5 seconds
+      timeout: 3s # gives 3 seconds to respond!
+      retries: 5 # how many consecutive Fails are allowed!
+      start_period: 10s # gives redis 10 seconds to prepare and initialize itself
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - web
