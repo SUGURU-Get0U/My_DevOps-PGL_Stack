@@ -33,6 +33,25 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+     - ./prometheus.yml:/etc/prometheus/prometheus.yml # Bind Mount (Config)
+     - prometheus-data:/prometheus # Named Volume (Database history)
     depends_on:
       - web
+  
+  grafana:
+    image: grafana/grafana-oss:latest # official image!
+    ports:
+      - "3000:3000" # default ports for GRAFANA UI!
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=pucpr_admin # Set your own password!
+    volumes:
+     - grafana-storage:/var/lib/grafana # data persistency, creating a volume makes so data isnt stored in the container but in the host's pc!
+    depends_on:
+      - prometheus
+
+# This section tells Docker to manage these "Storage Units"
+volumes:
+  prometheus-data:
+  grafana-data:
+
+    
