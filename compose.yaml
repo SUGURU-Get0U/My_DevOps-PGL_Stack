@@ -49,9 +49,22 @@ services:
     depends_on:
       - prometheus
 
+    ## My ollama Service!! <3
+  ollama:
+    volumes:
+      - ollama-data:/root/.ollama
+    container_name: ollama
+    pull_policy: always
+    tty: true
+    restart: unless-stopped
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434" # Default Ollama Port
+
 # This section tells Docker to manage these "Storage Units"
 volumes:
+  ollama-data:
   prometheus-data:
-  grafana-data:
+  grafana-storage:
 
     
