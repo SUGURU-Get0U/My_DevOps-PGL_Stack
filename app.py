@@ -10,7 +10,7 @@ cache = redis.Redis(
 )
 metrics = PrometheusMetrics(app) # This creates the /metrics route automatically
 
-@app.route("/")
-def hello():
-    count = cache.incr("hits")
-    return f"Hello from Docker! I hate those {count} monkey(s).\n"
+from views import ticket_blueprint
+
+app.register_blueprint(ticket_blueprint)
+

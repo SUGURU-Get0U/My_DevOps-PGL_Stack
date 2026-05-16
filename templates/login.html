@@ -1,0 +1,30 @@
+{% extends "base.html.jinja" %}
+
+{% block head %}
+    {{ super() }}
+
+{% endblock %}
+
+{% block content %}
+    <div class="left__container">
+        <div class="form_container" id="form_container">
+            <form id="form">
+                <div class="form__header">
+                    <label>Welcome to {{ siteName }}</label>
+                </div>
+                <div class="form__content">
+                    <label>Email</label>
+                    <input type="email" name="email" id="email" placeholder="jonhUmamusume@gmail.com">
+
+                    <label>Password</label>
+                    <input type="password" name="password" id="password">
+                </div>
+
+                <div class="has__an__account" id="has__an__account">
+                    <label>Don't have an account? <a href="#" target="_blank" rel="noopener noreferrer"> Sign up!</a></label>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
