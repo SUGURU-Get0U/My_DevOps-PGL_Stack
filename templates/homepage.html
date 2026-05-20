@@ -1,0 +1,33 @@
+{% extends "base.html.jinja" %}
+
+{% block head %}
+    {{ super() }}
+
+{% endblock %}
+
+{% block content %}
+    <div class="nav__sidebar">
+        <div class="nav__site__icon">
+            
+        </div>
+        <div class="nav__pages__list">
+            <ul>
+                {% for item in nav %}
+            <li><a href="{{ url_for(item.route) }}">{{ item.label }}</a></li>
+        {% endfor %}
+            </ul>
+        </div>
+        <div class="nav__footer">
+            <label class="nav__footer__text"></label>
+        </div>
+    </div>
+    <div class="main__content">
+        <div class="title__message">
+            <label> I love AI</label>
+        </div>
+        <div class="chat__box__container">
+            <input class="chat__box" type="text" placeholder="type something in!">
+        </div>
+    </div>
+
+{% endblock %}
