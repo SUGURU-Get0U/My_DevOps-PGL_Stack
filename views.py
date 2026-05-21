@@ -20,7 +20,7 @@ def home():
 
     return render_template(
         "homepage.html",
-        cssPath="styles/homepage/homepage.css",
+        cssPath="../static/homepage/homepage.css",
         pageTitle="Stermax Ticket AI",
         userName="Triple T",
         nav = nav   
