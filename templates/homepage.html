@@ -28,6 +28,9 @@
         <div class="chat__box__container">
             <input class="chat__box" type="text" placeholder="type something in!">
         </div>
+        {% for recipe in stats.top_recipes %}
+             <li>{{ recipe }}</li>
+        {% endfor %}
     </div>
 
 {% endblock %}

@@ -14,8 +14,19 @@ def ThothAI():
 def home():
     nav = [
         {"label": "Thoth AI", "route": "ticket_views.ThothAI"},
-        {"label": "Notebook", "route": "ticket_views.notebook"}
+        {"label": "Notebook", "route": "ticket_views.notebook"},
+        {"label": "Persona", "route": "ticket_views.persona"},
+        {"label": "Studies", "route": "ticket_views.studies"}
         ]
+    
+    # 2. Centralized Metric Data (Mocking data.json for now)
+    dashboard_stats = {
+        "pages_read": 50,
+        "push_ups": 20,
+        "top_recipes": ["Alfajor", "Chicken breast with rice"],
+        "project_name": "Thoth Center",
+        "weekly_commits": 2
+    }
 
 
     return render_template(
@@ -23,7 +34,8 @@ def home():
         cssPath="../static/homepage/homepage.css",
         pageTitle="Stermax Ticket AI",
         userName="Triple T",
-        nav = nav   
+        nav = nav,
+        stats=dashboard_stats 
         
     )
 
@@ -39,4 +51,16 @@ def login():
 def notebook():
     return render_template(
         "notebook/notebook.html"
+    )
+
+@ticket_blueprint.route("/persona")
+def persona():
+    return render_template(
+        "persona/persona.html"
+    )
+
+@ticket_blueprint.route("/studies")
+def studies():
+    return render_template(
+        "studies/studies.html"
     )
