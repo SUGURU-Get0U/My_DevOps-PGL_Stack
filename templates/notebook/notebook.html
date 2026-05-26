@@ -1,0 +1,15 @@
+{% extends "base.html.jinja" %}
+
+{% block head %}
+    {{ super() }}
+    <script src="../../static/notebook/notebook.js" defer></script>
+{% endblock %}
+
+{% block content %}
+
+<canvas id="space-canvas"></canvas>
+
+    <div class="notebook__container">
+        </div>
+
+{% endblock %}

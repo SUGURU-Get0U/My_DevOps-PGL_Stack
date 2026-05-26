@@ -88,7 +88,8 @@ def login():
 @ticket_blueprint.route("/notebook")
 def notebook():
     return render_template(
-        "notebook/notebook.html"
+        "notebook/notebook.html",
+        cssPath="../static/notebook/notebook.css"
     )
 
 @ticket_blueprint.route("/persona")
