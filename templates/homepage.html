@@ -2,35 +2,63 @@
 
 {% block head %}
     {{ super() }}
-
 {% endblock %}
 
 {% block content %}
     <div class="nav__sidebar">
         <div class="nav__site__icon">
-            
+            THOTH // AI
         </div>
         <div class="nav__pages__list">
             <ul>
                 {% for item in nav %}
-            <li><a href="{{ url_for(item.route) }}">{{ item.label }}</a></li>
-        {% endfor %}
+                    <li><a href="{{ url_for(item.route) }}">{{ item.label }}</a></li>
+                {% endfor %}
             </ul>
         </div>
         <div class="nav__footer">
             <label class="nav__footer__text"></label>
         </div>
     </div>
+
     <div class="main__content">
         <div class="title__message">
-            <label> I love AI</label>
+            <label>SYSTEM OVERVIEW</label>
         </div>
-        <div class="chat__box__container">
-            <input class="chat__box" type="text" placeholder="type something in!">
-        </div>
-        {% for recipe in stats.top_recipes %}
-             <li>{{ recipe }}</li>
-        {% endfor %}
-    </div>
 
+        <div class="chat__box__container">
+            <input class="chat__box" type="text" placeholder="Ask Thoth anything...">
+        </div>
+
+        <div class="dashboard__grid">
+            
+            <div class="metric__card">
+                <h3 class="metric__card-title">🐙 REPO METRICS</h3>
+                <p class="metric__card-value">{{ stats.weekly_commits }} Commits</p>
+                <span class="metric__card-meta">Tracking: {{ stats.total_repos }} active repos</span>
+            </div>
+
+            <div class="metric__card">
+                <h3 class="metric__card-title">📚 KNOWLEDGE BASE</h3>
+                <p class="metric__card-value">{{ stats.pages_read }} Pages</p>
+                <span class="metric__card-meta">Target: 12 books total</span>
+            </div>
+
+            <div class="metric__card">
+                <h3 class="metric__card-title">🏃‍♂️ PHYSIOLOGY</h3>
+                <p class="metric__card-value">{{ stats.push_ups }} Push-ups</p>
+                <span class="metric__card-meta">Weekly tracking active</span>
+            </div>
+
+            <div class="metric__card metric__card--wide">
+                <h3 class="metric__card-title">🍳 TOP RECIPES</h3>
+                <ul class="recipe__list">
+                    {% for recipe in stats.top_recipes %}
+                        <li class="recipe__item">🔥 {{ recipe }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+    </div>
 {% endblock %}

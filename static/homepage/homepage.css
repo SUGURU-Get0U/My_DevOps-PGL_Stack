@@ -119,3 +119,53 @@ body {
     border-color: var(--neon-purple);
     box-shadow: 0 0 15px rgba(157, 78, 221, 0.4);
 }
+
+/* --- Refactored Layout Grid & Metric Cards --- */
+
+.dashboard__grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.metric__card {
+    background: var(--bg-surface);
+    border: 1px solid var(--neon-purple);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(157, 78, 221, 0.1);
+    width: 250px;
+}
+
+.metric__card--wide {
+    width: 300px;
+}
+
+.metric__card-title {
+    color: var(--neon-glow);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.metric__card-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+.metric__card-meta {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.recipe__list {
+    list-style: none;
+    padding-top: 0.5rem;
+}
+
+.recipe__item {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+}

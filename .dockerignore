@@ -1,4 +1,18 @@
+# Ignore Git records
+.git
+.gitignore
+
+# Ignore your actual local credentials (CRITICAL!)
 .env
+
+# Ignore Python cached files (speeds up your build significantly)
+__pycache__/
 *.pyc
-__pycache__
-redis-data
+*.pyo
+*.pyd
+.pytest_cache/
+.poetry/
+
+# Ignore local system clutter
+.DS_Store
+Thumbs.db

@@ -1,43 +1,81 @@
-from flask import Blueprint, render_template, request
+import os
+from datetime import datetime, timedelta
+import requests
+from flask import Blueprint, render_template
 
-# 1. Define the blueprint. 
-# 'ticket_views' is the internal name, and we point it to our templates folder.
 ticket_blueprint = Blueprint('ticket_views', __name__, template_folder='templates')
 
-@ticket_blueprint.route("/ThothAI")
-def ThothAI():
-    return render_template(
-        "Ai/thothAI.html"
-    )
+def get_total_weekly_commits():
+    token = os.environ.get("GITHUB_TOKEN")
+    # Grab the raw string "repo1,repo2,..."
+    repos_raw = os.environ.get("GITHUB_REPOS")
+    
+    if not token or not repos_raw:
+        return 0
+
+    # Convert the comma-separated string into a clean Python list
+    repo_list = [repo.strip() for repo in repos_raw.split(",")]
+    
+    # Calculate the date exactly 7 days ago
+    since_date = (datetime.utcnow() - timedelta(days=7)).isoformat() + "Z"
+    
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28"
+    }
+    params = {
+        "since": since_date
+    }
+
+    total_commits = 0
+
+    # Loop through all 6 repositories
+    for repo in repo_list:
+        url = f"https://api.github.com/repos/{repo}/commits"
+        try:
+            response = requests.get(url, headers=headers, params=params, timeout=5)
+            if response.status_code == 200:
+                commits = response.json()
+                total_commits += len(commits) # Add this repo's commits to our grand total
+            else:
+                print(f"GitHub API Error for {repo}: {response.status_code}")
+        except requests.exceptions.RequestException as e:
+            print(f"Connection failed for {repo}: {e}")
+            
+    return total_commits
 
 @ticket_blueprint.route("/")
 def home():
     nav = [
-        {"label": "Thoth AI", "route": "ticket_views.ThothAI"},
+        {"label": "Thoth AI", "route": "ticket_views.thothAI"},
         {"label": "Notebook", "route": "ticket_views.notebook"},
-        {"label": "Persona", "route": "ticket_views.persona"},
-        {"label": "Studies", "route": "ticket_views.studies"}
-        ]
+        {"label": "Persona", "route": "ticket_views.persona"}
+    ]
     
-    # 2. Centralized Metric Data (Mocking data.json for now)
+    # This now scans all 6 repositories seamlessly!
+    total_commits = get_total_weekly_commits()
+
     dashboard_stats = {
         "pages_read": 50,
         "push_ups": 20,
         "top_recipes": ["Alfajor", "Chicken breast with rice"],
-        "project_name": "Thoth Center",
-        "weekly_commits": 2
+        "total_repos": 6,
+        "weekly_commits": total_commits 
     }
-
 
     return render_template(
         "homepage.html",
         cssPath="../static/homepage/homepage.css",
         pageTitle="Stermax Ticket AI",
         userName="Triple T",
-        nav = nav,
+        nav=nav,
         stats=dashboard_stats 
-        
     )
+
+@ticket_blueprint.route("/thothAI")
+def thothAI():
+    return render_template("Ai/thothAI.html")
 
 @ticket_blueprint.route("/login")
 def login():

@@ -17,6 +17,8 @@ services:
       - REDIS_PORT=${REDIS_PORT} # redis port is 6367 or smth
       - FLASK_DEBUG=1
       - FLASK_ENV=development
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - GITHUB_REPOS=${GITHUB_REPOS}
     
     depends_on: # this says, the web block will only run if redis is running!
       redis:
